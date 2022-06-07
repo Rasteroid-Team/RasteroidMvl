@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <rasteroidmvl.Joystick
+        android:id="@+id/joystickView"
+        android:layout_width="222dp"
+        android:layout_height="228dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:rotationX="-180"
+        custom:backgroundColor="#009688"
+        custom:borderColor="#00796B"
+        custom:borderWidth="4dp"
+        custom:buttonColor="#FF6E40"
+        custom:buttonSizeRatio="15%"
+        custom:layout_constraintStart_toStartOf="parent"
+        custom:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/fire"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/rounded_button"
+        custom:layout_constraintBottom_toBottomOf="parent"
+        custom:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
