@@ -12,14 +12,16 @@ package communications;
 public class LookupUpdater implements Runnable {
     
     private CommunicationController controller;
+    private Connection connection;
     
-    public LookupUpdater(CommunicationController controller){
+    public LookupUpdater(CommunicationController controller, Connection connection){
         this.controller = controller;
+        this.connection = connection;
     }
 
     @Override
     public void run() {
-        controller.sendToNeighbors(13, controller.joinMaps());
+        controller.sendToNeighbors(13, controller.joinMaps(), this.connection);
     }
     
 }
