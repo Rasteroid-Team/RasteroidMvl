@@ -42,6 +42,8 @@ public class ControllerFragment extends Fragment implements ConnectionInterface 
                 @Override
                 public void run() {
                     controllerActivity.getController().connectToIp(controllerActivity.getIp());
+                    //send selected ship
+                    //ProtocolDataPacket selectedShip = controllerActivity.getController().createPacket(mac, 155, "pl:id:phoenix");
                 }
             }).start();
         }
@@ -89,11 +91,30 @@ public class ControllerFragment extends Fragment implements ConnectionInterface 
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        //hide ui to improve immersion
+        UiManager.setUiVisibility(getActivity(), false);
+    }
+
+    @Override
     public void onMessageReceived(ProtocolDataPacket packet) {
         switch (packet.getId()){
             case 180:
                 this.mac = (String)packet.getObject();
+                System.out.println("Mac recibida!");
                 break;
+            case 155:
+                System.out.println("Mac = "+mac);
+                new Thread(() -> {
+                    while (mac == null){
+                        try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+                        System.out.println("Esperando a recibir mac");
+                    }
+                    ProtocolDataPacket modelo = controllerActivity.getController().createPacket(mac, 156, controllerActivity.getModelId());
+                    controllerActivity.getController().sendMessage(modelo);
+                    System.out.println("Modelo enviado");
+                }).start();
         }
     }
 

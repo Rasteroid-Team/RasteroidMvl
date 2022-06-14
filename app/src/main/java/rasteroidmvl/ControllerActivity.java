@@ -14,11 +14,20 @@ public class ControllerActivity extends AppCompatActivity {
 
     private CommunicationController controller;
     private String ip;
+    private String modelId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.controller_main);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //hide ui to improve immersion
+        UiManager.setUiVisibility(this, false);
     }
 
     public CommunicationController getController() {
@@ -44,5 +53,13 @@ public class ControllerActivity extends AppCompatActivity {
             imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    public void setModelId(String selectedShipId) {
+        modelId = selectedShipId;
+    }
+
+    public String getModelId(){
+        return modelId;
     }
 }
