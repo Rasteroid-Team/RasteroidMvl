@@ -115,6 +115,10 @@ public class ControllerFragment extends Fragment implements ConnectionInterface 
                     controllerActivity.getController().sendMessage(modelo);
                     System.out.println("Modelo enviado");
                 }).start();
+            case 200:
+                System.out.println("Player died!");
+                //Fragment Game Over Screen
+                break;
         }
     }
 
