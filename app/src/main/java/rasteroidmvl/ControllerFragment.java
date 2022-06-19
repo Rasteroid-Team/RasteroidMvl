@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import communications.ConnectionInterface;
 import communications.ProtocolDataPacket;
@@ -17,7 +18,7 @@ import communications.ProtocolDataPacket;
 public class ControllerFragment extends Fragment implements ConnectionInterface {
 
     private Joystick joystick;
-    private Button fire;
+    private ImageView fire;
     private ControllerActivity controllerActivity;
     private String mac;
     private int lastAngle;

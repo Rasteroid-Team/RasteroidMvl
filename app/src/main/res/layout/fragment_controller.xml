@@ -2,33 +2,35 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/fondo"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
     <rasteroidmvl.Joystick
         android:id="@+id/joystickView"
-        android:layout_width="222dp"
-        android:layout_height="228dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="205dp"
+        android:layout_height="204dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="64dp"
         android:rotationX="-180"
-        custom:backgroundColor="#009688"
-        custom:borderColor="#00796B"
+        custom:backgroundColor="#292929"
+        custom:borderColor="#646464"
         custom:borderWidth="4dp"
-        custom:buttonColor="#FF6E40"
+        custom:buttonColor="#646464"
         custom:buttonSizeRatio="15%"
         custom:layout_constraintStart_toStartOf="parent"
         custom:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <ImageView
         android:id="@+id/fire"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginBottom="60dp"
-        android:background="@drawable/rounded_button"
+        android:layout_width="122dp"
+        android:layout_height="117dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginBottom="76dp"
+        android:background="@drawable/disparo"
         custom:layout_constraintBottom_toBottomOf="parent"
-        custom:layout_constraintStart_toStartOf="parent" />
+        custom:layout_constraintStart_toStartOf="parent">
+    </ImageView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
