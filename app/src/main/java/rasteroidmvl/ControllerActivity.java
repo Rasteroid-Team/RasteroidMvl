@@ -2,10 +2,12 @@ package rasteroidmvl;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.inputmethod.InputMethodManager;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import communications.CommunicationController;
 
@@ -15,12 +17,24 @@ public class ControllerActivity extends AppCompatActivity {
     private CommunicationController controller;
     private String ip;
     private String modelId;
+    private FragmentManager fragmentManager;
+    private final String DEBUG_TAG="CONTROLLER ACTIVITY MESSAGE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.controller_main);
-
+        fragmentManager = getSupportFragmentManager();
+        if (savedInstanceState == null) {
+            Log.d(DEBUG_TAG, "savedinstancestate es null");
+            fragmentManager
+                    .beginTransaction()
+                    .setReorderingAllowed(true)
+                    .add(R.id.fragmentContainerView,
+                            InputFragmentController.class
+                            , null)
+                    .commit();
+        }
     }
 
     @Override
