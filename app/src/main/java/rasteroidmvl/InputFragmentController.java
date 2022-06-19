@@ -25,7 +25,7 @@ public class InputFragmentController extends Fragment {
     //ship selection
     private ImageView[] shipSelections;
     private String selectedShipId = ApiService.PLAYER_ID.HR75.getId();
-    private final int selectedColor = Color.parseColor("#66F400");
+    private final int selectedColor = Color.parseColor("#27c2b6");
     private final int unselectedColor = Color.parseColor("#00000000");
 
     @Override
@@ -39,7 +39,7 @@ public class InputFragmentController extends Fragment {
 
         View view=inflater.inflate(R.layout.fragment_input, container, false);
 
-        this.ipEditText=(EditText)view.findViewById(R.id.editTextIP);
+        this.ipEditText=(EditText)view.findViewById(R.id.editTextName);
         this.connectButton=(Button)view.findViewById(R.id.connectButton);
         this.controllerActivity =(ControllerActivity)getActivity();
 
@@ -65,7 +65,7 @@ public class InputFragmentController extends Fragment {
         this.connectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                controllerActivity.setIp(ipEditText.getText().toString());
+                controllerActivity.setName(ipEditText.getText().toString());
                 controllerActivity.setModelId(selectedShipId);
                 controllerActivity.getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragmentContainerView, ControllerFragment.class, null)

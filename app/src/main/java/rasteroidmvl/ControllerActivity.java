@@ -16,6 +16,7 @@ public class ControllerActivity extends AppCompatActivity {
 
     private CommunicationController controller;
     private String ip;
+    private String Name;
     private String modelId;
     private FragmentManager fragmentManager;
     private final String DEBUG_TAG="CONTROLLER ACTIVITY MESSAGE";
@@ -75,5 +76,13 @@ public class ControllerActivity extends AppCompatActivity {
 
     public String getModelId(){
         return modelId;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String name) {
+        Name = name;
     }
 }
