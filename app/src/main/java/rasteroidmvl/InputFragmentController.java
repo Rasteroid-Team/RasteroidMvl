@@ -19,6 +19,7 @@ import communications.CommunicationController;
 public class InputFragmentController extends Fragment {
 
     private EditText ipEditText;
+    private EditText nameEditText;
     private Button connectButton;
     private ControllerActivity controllerActivity;
 
@@ -37,11 +38,12 @@ public class InputFragmentController extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view=inflater.inflate(R.layout.fragment_input, container, false);
+        View view = inflater.inflate(R.layout.fragment_input, container, false);
 
-        this.ipEditText=(EditText)view.findViewById(R.id.editTextName);
-        this.connectButton=(Button)view.findViewById(R.id.connectButton);
-        this.controllerActivity =(ControllerActivity)getActivity();
+        this.nameEditText = (EditText) view.findViewById(R.id.editTextName);
+        this.ipEditText = (EditText) view.findViewById(R.id.editTextIP);
+        this.connectButton = (Button) view.findViewById(R.id.connectButton);
+        this.controllerActivity = (ControllerActivity) getActivity();
 
         new Thread(new Runnable() {
             @Override
@@ -58,14 +60,15 @@ public class InputFragmentController extends Fragment {
             shipSelections[1] = view.findViewById(R.id.phoenix);
         }
         //handler
-        for (ImageView ship:shipSelections) {
+        for (ImageView ship : shipSelections) {
             ship.setOnClickListener(shipSelectorListener());
         }
 
         this.connectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                controllerActivity.setName(ipEditText.getText().toString());
+                controllerActivity.setName(nameEditText.getText().toString());
+                controllerActivity.setIp(ipEditText.getText().toString());
                 controllerActivity.setModelId(selectedShipId);
                 controllerActivity.getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragmentContainerView, ControllerFragment.class, null)
@@ -78,21 +81,20 @@ public class InputFragmentController extends Fragment {
         return view;
     }
 
-    private View.OnClickListener shipSelectorListener()
-    {
+    private View.OnClickListener shipSelectorListener() {
         return view -> {
             //interface
-            for (ImageView shipSelection:shipSelections) {
-                if (shipSelection == view){
+            for (ImageView shipSelection : shipSelections) {
+                if (shipSelection == view) {
                     shipSelection.setBackgroundColor(selectedColor);
                 } else {
                     shipSelection.setBackgroundColor(unselectedColor);
                 }
             }
             //logic
-            if (view == shipSelections[0]){
+            if (view == shipSelections[0]) {
                 selectedShipId = ApiService.PLAYER_ID.HR75.getId();
-            } else if (view == shipSelections[1]){
+            } else if (view == shipSelections[1]) {
                 selectedShipId = ApiService.PLAYER_ID.PHOENIX.getId();
             }
         };
