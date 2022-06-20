@@ -86,4 +86,7 @@ public class ControllerActivity extends AppCompatActivity {
     public void setName(String name) {
         Name = name;
     }
+
+    @Override
+    public void onBackPressed() { }
 }

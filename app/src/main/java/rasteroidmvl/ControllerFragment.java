@@ -28,8 +28,8 @@ public class ControllerFragment extends Fragment implements ConnectionInterface 
     private int lastAngle;
     private int lastStrength;
     private boolean connected;
-    MediaPlayer disparo;
-    MediaPlayer acelerar;
+    private MediaPlayer disparo;
+    private MediaPlayer acelerar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
