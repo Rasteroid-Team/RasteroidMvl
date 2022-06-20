@@ -1,10 +1,12 @@
 package rasteroidmvl;
 
 import android.annotation.SuppressLint;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -26,12 +28,17 @@ public class ControllerFragment extends Fragment implements ConnectionInterface 
     private int lastAngle;
     private int lastStrength;
     private boolean connected;
+    MediaPlayer disparo;
+    MediaPlayer acelerar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        disparo = MediaPlayer.create(getActivity(), R.raw.disparo);
+        acelerar = MediaPlayer.create(getActivity(), R.raw.acelera);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -57,6 +64,7 @@ public class ControllerFragment extends Fragment implements ConnectionInterface 
         joystick.setOnMoveListener(new OnMoveListener() {
             @Override
             public void onMove(int angle, int strength) {
+                acelerar.start();
                 if (mac != null) {
                     if (lastAngle!=angle || lastStrength!=strength) {
                         ProtocolDataPacket datos = controllerActivity.getController().createPacket(mac, 152, new int[] {strength, angle});
@@ -76,6 +84,7 @@ public class ControllerFragment extends Fragment implements ConnectionInterface 
         });
 
         fire.setOnTouchListener((view1, event) -> {
+            disparo.start();
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 fire.setBackgroundResource(R.drawable.disparo_selected);
 

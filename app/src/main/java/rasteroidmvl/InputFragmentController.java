@@ -1,8 +1,9 @@
 package rasteroidmvl;
 
-import android.content.pm.ActivityInfo;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,10 +28,12 @@ public class InputFragmentController extends Fragment {
     private String selectedShipId = ApiService.PLAYER_ID.HR75.getId();
     private final int selectedColor = Color.parseColor("#27c2b6");
     private final int unselectedColor = Color.parseColor("#00000000");
+    MediaPlayer aparicion;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        aparicion = MediaPlayer.create(getActivity(), R.raw.aparicion);
     }
 
     @Override
@@ -65,6 +68,7 @@ public class InputFragmentController extends Fragment {
         this.connectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                aparicion.start();
                 controllerActivity.setName(ipEditText.getText().toString());
                 controllerActivity.setModelId(selectedShipId);
                 controllerActivity.getSupportFragmentManager().beginTransaction()
