@@ -1,11 +1,13 @@
 package rasteroidmvl;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -73,9 +75,9 @@ public class ControllerFragment extends Fragment implements ConnectionInterface 
             }
         });
 
-        fire.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        fire.setOnTouchListener((view1, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                fire.setBackgroundResource(R.drawable.disparo_selected);
 
                 ProtocolDataPacket datos = controllerActivity.getController().createPacket(mac, 151, null);
 
@@ -85,7 +87,12 @@ public class ControllerFragment extends Fragment implements ConnectionInterface 
                         controllerActivity.getController().sendMessage(datos);
                     }
                 }).start();
+
+            } else {
+                fire.setBackgroundResource(R.drawable.disparo);
+
             }
+            return true;
         });
 
         return view;

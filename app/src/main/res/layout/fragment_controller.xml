@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/fondo"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -17,8 +16,8 @@
         custom:backgroundColor="#292929"
         custom:borderColor="#646464"
         custom:borderWidth="4dp"
-        custom:buttonColor="#646464"
-        custom:buttonSizeRatio="15%"
+        custom:buttonImage="@drawable/joystick"
+        custom:buttonSizeRatio="23%"
         custom:layout_constraintStart_toStartOf="parent"
         custom:layout_constraintTop_toTopOf="parent" />
 
