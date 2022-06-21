@@ -30,15 +30,15 @@ public class ControllerFragment extends Fragment implements ConnectionInterface 
     private int lastAngle;
     private int lastStrength;
     private boolean connected;
-    private SoundPool disparo;
-    private SoundPool acelerar;
+    private Audio disparo;
+    private Audio acelerar;
     int reproduccion_acelerar, reproduccion_disparo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        disparo = new SoundPool(1, AudioManager.STREAM_MUSIC,1);
-        acelerar = new SoundPool(1, AudioManager.STREAM_MUSIC,1);
+        disparo = new Audio(1, AudioManager.STREAM_MUSIC,1);
+        acelerar = new Audio(1, AudioManager.STREAM_MUSIC,1);
         reproduccion_acelerar = acelerar.load(getActivity(),R.raw.acelera,1);
         reproduccion_disparo = disparo.load(getActivity(),R.raw.disparo,1);
     }
