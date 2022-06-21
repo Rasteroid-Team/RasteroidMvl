@@ -1,7 +1,9 @@
 package rasteroidmvl;
 
 import android.annotation.SuppressLint;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -28,21 +30,23 @@ public class ControllerFragment extends Fragment implements ConnectionInterface 
     private int lastAngle;
     private int lastStrength;
     private boolean connected;
-    private MediaPlayer disparo;
-    private MediaPlayer acelerar;
+    private SoundPool disparo;
+    private SoundPool acelerar;
+    int reproduccion_acelerar, reproduccion_disparo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        disparo = MediaPlayer.create(getActivity(), R.raw.disparo);
-        acelerar = MediaPlayer.create(getActivity(), R.raw.acelera);
+        disparo = new SoundPool(1, AudioManager.STREAM_MUSIC,1);
+        acelerar = new SoundPool(1, AudioManager.STREAM_MUSIC,1);
+        reproduccion_acelerar = acelerar.load(getActivity(),R.raw.acelera,1);
+        reproduccion_disparo = disparo.load(getActivity(),R.raw.disparo,1);
     }
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_controller, container, false);
         this.controllerActivity = ((ControllerActivity)this.getActivity());
         this.controllerActivity.getController().addAllListeners(this);
@@ -64,18 +68,16 @@ public class ControllerFragment extends Fragment implements ConnectionInterface 
         joystick.setOnMoveListener(new OnMoveListener() {
             @Override
             public void onMove(int angle, int strength) {
-                acelerar.start();
+                acelerar.play(reproduccion_acelerar,1,1,1,0, 1);
                 if (mac != null) {
                     if (lastAngle!=angle || lastStrength!=strength) {
                         ProtocolDataPacket datos = controllerActivity.getController().createPacket(mac, 152, new int[] {strength, angle});
-
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
                                 controllerActivity.getController().sendMessage(datos);
                             }
                         }).start();
-
                         lastStrength=strength;
                         lastAngle=angle;
                     }
@@ -84,12 +86,10 @@ public class ControllerFragment extends Fragment implements ConnectionInterface 
         });
 
         fire.setOnTouchListener((view1, event) -> {
-            disparo.start();
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 fire.setBackgroundResource(R.drawable.disparo_selected);
-
                 ProtocolDataPacket datos = controllerActivity.getController().createPacket(mac, 151, null);
-
+                disparo.play(reproduccion_disparo,1,1,1,0, 1);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {

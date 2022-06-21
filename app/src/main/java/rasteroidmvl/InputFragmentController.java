@@ -71,11 +71,7 @@ public class InputFragmentController extends Fragment {
                 aparicion.start();
                 controllerActivity.setName(ipEditText.getText().toString());
                 controllerActivity.setModelId(selectedShipId);
-                controllerActivity.getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragmentContainerView, ControllerFragment.class, null)
-                        .setReorderingAllowed(true)
-                        .addToBackStack(null)
-                        .commit();
+                controllerActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView, ControllerFragment.class, null).setReorderingAllowed(true).addToBackStack(null).commit();
             }
         });
 
