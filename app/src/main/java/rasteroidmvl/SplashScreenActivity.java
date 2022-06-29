@@ -29,6 +29,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),
                         ControllerActivity.class));
                 Log.d(DEBUG_TAG, "ANIMACIÓN FINALIZADA.");
+                finish();
             }
         });
         lottieAnimationView.addAnimatorUpdateListener((animation) -> {
@@ -38,5 +39,11 @@ public class SplashScreenActivity extends AppCompatActivity {
             }
         });
         lottieAnimationView.playAnimation();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        UiManager.setUiVisibility(this, false);
     }
 }

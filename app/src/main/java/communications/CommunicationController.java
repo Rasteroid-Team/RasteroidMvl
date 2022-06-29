@@ -514,7 +514,8 @@ public class CommunicationController {
         ArrayList<Connection> allConnections = this.getAllConnections();
         for(String str : joinedMap.keySet()){
             for(Connection e : allConnections){
-                if(e.getLookup().containsKey(str) && e.getLookup().get(str).equals(joinedMap.get(str))){
+                if(e != null && e.getSocket() != null && e.getLookup().containsKey(str) &&
+                        e.getLookup().get(str).equals(joinedMap.get(str))){
                     returnMap.put(str, e);
                     break;
                 }
@@ -595,8 +596,8 @@ public class CommunicationController {
      * @param conn the connection to not close or null
      */
     public void closeAllConnections(Connection conn){
-        this.closePcConnections(null);
-        this.closeMobileConnections(null);
+        this.closePcConnections(conn);
+        this.closeMobileConnections(conn);
     }
     
     /**

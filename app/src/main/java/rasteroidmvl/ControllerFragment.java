@@ -17,12 +17,11 @@ import communications.ConnectionInterface;
 import communications.ProtocolDataPacket;
 
 
-public class ControllerFragment extends Fragment implements ConnectionInterface {
+public class ControllerFragment extends Fragment {
 
     private Joystick joystick;
     private ImageView fire;
     private ControllerActivity controllerActivity;
-    private String mac;
     private int lastAngle;
     private int lastStrength;
     private boolean connected;
@@ -38,18 +37,19 @@ public class ControllerFragment extends Fragment implements ConnectionInterface 
 
         View view = inflater.inflate(R.layout.fragment_controller, container, false);
         this.controllerActivity = ((ControllerActivity)this.getActivity());
-        this.controllerActivity.getController().addAllListeners(this);
+        this.controllerActivity.setActiveFragment(ControllerActivity.ActiveFragment.CONTROLLER);
 
-        if (controllerActivity.getIp()!=null && !controllerActivity.getIp().isEmpty()){
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    controllerActivity.getController().connectToIp(controllerActivity.getIp());
-                    //send selected ship
-                    //ProtocolDataPacket selectedShip = controllerActivity.getController().createPacket(mac, 155, "pl:id:phoenix");
-                }
-            }).start();
-        }
+        new Thread(() -> {
+            while (this.controllerActivity.getMac() == null){
+                try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
+                System.out.println("Esperando a recibir mac");
+            }
+            System.out.println(this.controllerActivity.getMac());
+            ProtocolDataPacket modelo = controllerActivity.getController().createPacket(
+                    this.controllerActivity.getMac(), 156, controllerActivity.getModelId());
+            controllerActivity.getController().sendMessage(modelo);
+            System.out.println("Modelo enviado");
+        }).start();
 
         joystick = view.findViewById(R.id.joystickView);
         fire = view.findViewById(R.id.fire);
@@ -57,9 +57,10 @@ public class ControllerFragment extends Fragment implements ConnectionInterface 
         joystick.setOnMoveListener(new OnMoveListener() {
             @Override
             public void onMove(int angle, int strength) {
-                if (mac != null) {
+                if (controllerActivity.getMac() != null) {
                     if (lastAngle!=angle || lastStrength!=strength) {
-                        ProtocolDataPacket datos = controllerActivity.getController().createPacket(mac, 152, new int[] {strength, angle});
+                        ProtocolDataPacket datos = controllerActivity.getController().createPacket(
+                                controllerActivity.getMac(), 152, new int[] {strength, angle});
 
                         new Thread(new Runnable() {
                             @Override
@@ -79,7 +80,8 @@ public class ControllerFragment extends Fragment implements ConnectionInterface 
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 fire.setBackgroundResource(R.drawable.disparo_selected);
 
-                ProtocolDataPacket datos = controllerActivity.getController().createPacket(mac, 151, null);
+                ProtocolDataPacket datos = controllerActivity.getController().createPacket(
+                        this.controllerActivity.getMac(), 151, null);
 
                 new Thread(new Runnable() {
                     @Override
@@ -103,36 +105,5 @@ public class ControllerFragment extends Fragment implements ConnectionInterface 
         super.onStart();
         //hide ui to improve immersion
         UiManager.setUiVisibility(getActivity(), false);
-    }
-
-    @Override
-    public void onMessageReceived(ProtocolDataPacket packet) {
-        switch (packet.getId()){
-            case 180:
-                this.mac = (String)packet.getObject();
-                System.out.println("Mac recibida!");
-                break;
-            case 155:
-                System.out.println("Mac = "+mac);
-                new Thread(() -> {
-                    while (mac == null){
-                        try {Thread.sleep(100);} catch (InterruptedException e) {e.printStackTrace();}
-                        System.out.println("Esperando a recibir mac");
-                    }
-                    ProtocolDataPacket modelo = controllerActivity.getController().createPacket(mac, 156, controllerActivity.getModelId());
-                    controllerActivity.getController().sendMessage(modelo);
-                    System.out.println("Modelo enviado");
-                }).start();
-        }
-    }
-
-    @Override
-    public void onConnectionAccept(String mac) {
-        this.mac=mac;
-    }
-
-    @Override
-    public void onConnectionClosed(String mac) {
-
     }
 }

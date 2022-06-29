@@ -69,14 +69,25 @@
             android:backgroundTint="#00E44E"/>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textScreenNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:layout_gravity="center"
+        android:textSize="40sp"/>
+
     <Button
-        android:id="@+id/connectButton"
+        android:id="@+id/startButton"
         android:layout_width="188dp"
         android:layout_marginTop="100dp"
         android:background="@drawable/btn_style"
         android:layout_height="100sp"
         android:textSize="25sp"
-        android:text="CONNECT"
+        android:text="START"
         android:layout_gravity="center"/>
 
 

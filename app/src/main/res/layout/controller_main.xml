@@ -9,7 +9,7 @@
 
     <FrameLayout
         android:id="@+id/fragmentContainerView"
-        android:name="rasteroidmvl.InputFragmentController"
+        android:name="rasteroidmvl.ConnectionFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />

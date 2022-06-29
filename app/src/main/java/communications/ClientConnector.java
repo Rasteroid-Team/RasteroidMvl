@@ -38,7 +38,8 @@ class ClientConnector implements Runnable{
             return socket;
             
         } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+            System.out.println("connect" + ex.getMessage());
+            ex.printStackTrace();
             return null;
         }
     }
